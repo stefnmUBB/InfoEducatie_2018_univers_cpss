@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="../icon.png">
+		<link rel="stylesheet" type="text/css" href="res/style.css">
+		<script src="../utils.js"></script>
+		<title>Stele</title>
+		<style>
+			#Background {
+				background-image:url('res/bg_stars.jpg');
+			}
+			
+			.Content {
+				background:linear-gradient(to bottom,rgba(33, 33, 33,0.5) 1%,rgba(33, 33, 33,0.8) 30%,transparent 100%);
+			}
+		</style>
+	</head>
+	
+	<body style="margin:0">
+		<div id="Background"></div>
+		<div id="Head">
+			<h1 id="Title">Descoperă stelele</h1>
+		</div>
+		
+		<div class="Content" style="margin-bottom:10%;">
+			<p>Știm cu toții că Universul este într-o expansiune și într-o schimbare continuă. Din acesta  fac parte și stelele, corpuri cerești fascinante. Atât oamenii, cât și cercetătorii continuă să caute și să afle cât mai multe informații despre acestea.</p>
+			<ol>
+				<li> Stelele trec prin mai multe etape de viață, la fel ca orice altă ființă organică. Atunci când o stea moare, ea se transformă într-un „pitic alb”, se stinge treptat emanând lumină albă până când se stinge pentru totdeauna. <img src="res/dead.jpg"> </li>
+				<li> Unele tipuri de stele sunt de 100 de ori mai mari decât Soarele. Mai mult, aceste stele pot să emane de peste 1 milion de ori mai multă energie decât Soarele.</li>
+				<li> Eta Carinae este una dintre cele mai mari stele din galaxie. <img src="res/eta_carinae.jpg"></li>
+				<li> Unitățile de măsură utilizate pentru măsurarea distanței dintre stele și Pământ au valori imense. Cea mai apropiată stea de Pământ este situată la aproximativ 4,2 ani-lumină depărtare. Ar fi nevoie de aproximativ 70 000 de ani pentru a ajunge în spațiu la acea stea.</li>
+			</ol>
+		</div>
+		
+		<div id="Menu" onmouseover="MenuHover=true" onmouseleave="MenuHover=false">
+			<img class="MenuIcon" src="res/exit.png" onclick="accessPage('../../index.html')"/>
+			<img class="MenuIcon" src="../icons/ufo.png" onclick="accessPage('ozn.html')"/>
+			<img class="MenuIcon" src="../icons/stea.png" onclick="accessPage('stele.html')"/>
+			<img class="MenuIcon" src="../icons/constelatie.png" onclick="accessPage('constelatii.html')"/>
+		</div>
+		
+		<div id="Footer">
+			<a href="http://bunadimineata.ro/de-dimineata/curiozitati-despre-stele/" target="_blank">bunadimineata.ro</a><p>:</span><p> Vezi continuarea topului despre stele pe </p>
+		</div>
+		
+		<script src="res/script.js"></script>
+	
+	</body>
+</html>

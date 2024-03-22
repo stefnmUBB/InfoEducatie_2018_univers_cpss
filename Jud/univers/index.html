@@ -1,0 +1,877 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Universul</title>
+		<link rel="icon" href="res/icon.png">
+		<script src="res/utils.js"></script>
+		<style>
+		
+			body {
+				background-color: darkblue;
+				background-image: url("res/bg.gif");
+				background-repeat: no-repeat;
+				background-position:center 0 0;
+			}
+			
+			#Head {
+				position:absolute;
+				width:100%;
+				height:10%;
+				background:linear-gradient(to bottom,rgba(0,0,0,0.7),rgba(0,0,0,0.5),rgba(0,0,0,0.3),rgba(0,0,0,0.1));
+				opacity:0.5;
+				top:0;
+				left:0;
+			}
+			
+			#Menu { 
+				position:absolute;
+				height:10%;
+				top:0;
+				left:40%;
+				width:60%;
+			}
+			
+			.MenuItem, .iButton {
+				border:none;
+				display:inline;
+				box-align:center;
+				outerWidth:10%;
+				outerHeight:80%;
+				height:50px;
+				background-color:lightblue;
+				color:black;
+				transform: skew(-20deg);
+			}
+			
+			.MenuItem {
+				height:80%;
+			}
+			
+			.iButton {
+				border:none;
+				margin:0px;
+				outline:0;
+				transform: skew(0deg);
+				border-radius:10px;
+				position:absolute;
+				top:88%;
+				height:10%;
+				width:10%;
+				left:45%;
+			}
+			
+			#bText {
+				
+				margin:1%;
+				width:80%;
+				height:80%;
+				position:absolute;
+				top:20%;
+				left:12.5%;
+				font-family:TimesNewRoman;
+			}
+			
+			.MenuItem:hover, .iButton:hover {
+				background-color:darkblue;
+				color:white;
+			}
+			
+			.MenuItem:focus {
+				outline:none;
+			}
+			
+			.SlideDiv {
+				position:absolute;
+				opacity:0;
+				overflow-x:auto;
+				overflow-y:none;
+				margin-left:10px;
+				border-top-left-radius:8%;
+				border-bottom-left-radius:2%;
+				border-top:1% solid lightblue;
+			}
+			
+			::-webkit-scrollbar {
+				width:5px;
+				height:5px;
+			}
+			
+			::-webkit-scrollbar-track {
+				background-color:transparent;
+			}
+			
+			::-webkit-scrollbar-thumb {
+				background-color:lightblue;
+				border-radius:10%;
+			}
+			
+			#iWindow {
+				user-select:none;
+			}
+			
+			@keyframes GBAIn {
+				from {width:3%; height:20%; top:40%;}
+				to {width:5%; height:30%; top:35%;}
+			}
+			
+			@keyframes GBAOut {
+				from {width:5%;height:30%; top:35%;}
+				to {width:3%; height:20%; top:40%;}
+			}
+			
+			.GalButton {
+				outline:none;
+				border:none;
+				position:absolute;
+				background-color:black;
+				color:white;
+				top:40%;
+				width:3%;
+				height:20%;
+				opacity:0.5;
+				animation-name:GBAOut;
+				animation-duration:1s;
+			}
+			
+			.GalButton:hover {
+				opacity:0.7;
+				animation-name:GBAIn;
+				animation-duration:1s;
+				width:5%;
+				height:30%;
+				top:35%;
+			}
+			
+			#GBPrev {
+				left:0;
+			}
+			
+			#GBNext {
+				right:0;
+			}
+			
+			.QuizWindow {
+				position:absolute;
+				top:0;
+				left:0;
+				width:100%;
+				height:100%;
+				background-color:rgba(0,0,255,0.5);
+				color:white;
+				overflow:auto;
+			}
+			
+			.QuizButton {
+				position:relative;
+				display:block;
+				width:10%;
+				height:10%
+				font-size:10%;
+				background-color:lightblue;
+				color:darkblue;
+				border-radius:10%;
+				border:none;
+				outline:none;
+				margin-top:0.5%;
+				padding:1%;
+				z-index:0;
+			}
+			
+			.QuizButton:hover {
+				background-color:darkblue;
+				color:lightblue;
+				width:10.3%;
+				border: 2px dotted red;
+				z-index:1;
+			}
+			
+			.QuizButton:active {
+				color:white;
+				border:2px dotted blue;
+			}
+			
+			#QuizHeader {
+				color:lightblue;
+			}
+			
+			#QuizHeader:before {
+				content:"Quiz: ";
+			}
+			
+			.QEasy:before, .QMedium:before, .QHard:before {
+				content:" * ";
+			}
+			
+			.QEasy:before {
+				color:lime;
+			}
+			
+			.QMedium:before {
+				color:orange;
+			}
+			
+			.QHard:before {
+				color:red;
+			}
+			
+			.QEasy:hover:before,
+			.QMedium:hover:before,
+			.QHard:hover:before {
+				background-color:rgba(0,0,0,0.3);
+				border-top-left-radius:70%;
+				border-top-right-radius:70%;
+				border-bottom-left-radius:90%;
+				border-bottom-right-radius:90%;
+			}
+			
+			.QEasy:hover:before {
+				content:"Easy";
+			}
+			
+			.QMedium:hover:before {
+				content:"Medium";
+			}
+			
+			.QHard:hover:before {
+				content:"Hard";
+			}
+			
+			.qAnswer {
+					display:none;
+			}
+			
+			ul#DifficultyList {
+				list-style-type:none;
+			}
+			
+			ol#PlanetsList li {
+				color:lightblue;
+				background-color:darkblue;
+				padding:0.3%;
+				text-align:center;
+			}
+			
+			ol#PlanetsList li:hover {
+				border:2px solid lightblue;
+			}
+			
+			@keyframes LMAIn {
+				from { left:-6%;}
+				to { left:0;}
+			}
+			
+			@keyframes LMAOut {
+				from { left:0;}
+				to { left:-6%;}
+			}
+			
+			#LeftMenu {
+				position:absolute;
+				top:10%;
+				width:7%;
+				height:80%;
+				animation-name:LMAOut;
+				animation-duration:1s;
+				background:linear-gradient(to right,darkblue 1%,transparent 80%);
+				left:-6%;
+				border-top-right-radius:100%;
+				border-bottom-right-radius:100%;
+			}
+			
+			#LeftMenu:hover {
+				animation-name:LMAIn;
+				animation-duration:1s;	
+				left:0;				
+			}
+			
+			.LMButton {
+				margin:10%;
+				margin-top:55%;
+				-webkit-filter: invert(1);
+				filter:invert(100%);
+				opacity:0.7;
+				width:80%;
+			}
+			
+			.LMButton:hover {
+				opacity:1;
+			}
+			
+			@keyframes LMDPIn {
+				from { color: transparent; }
+				to { color:white;}
+			}
+			
+			@keyframes LMDPOut {
+				from { color:white;}
+				to { color:transparent;}
+			}
+			
+			.LMD p {
+				text-align:center;
+				animation-name:LMDPOut;
+				animation-duration:2s;
+				color:transparent;
+			}
+			
+			.LMD:hover p {
+				animation-name:LMDPIn;
+				animation-duration:1s;
+				color:white;
+			}
+			
+			#SlideShowButton {
+				border-radius:0;
+			}
+			
+		</style>
+		
+		<script>
+			var Menu=document.getElementById("Menu");
+			var Pages=document.getElementsByClassName("SlideDiv");
+			var currentSlide=0;
+			
+			window.onload=function() {
+				document.body.style.backgroundSize=document.body.clientWidth+'px '+document.body.clientHeight+'px';
+				for(i=0;i<Pages.length;i++) {
+					Pages[i].style.marginTop =document.body.clientHeight/10;
+					Pages[i].style.width =4/5*document.body.clientWidth-2*Pages[i].offsetLeft;
+					Pages[i].style.left=1/10*document.body.clientWidth-Pages[i].offsetLeft;
+					Pages[i].style.height=document.body.clientHeight*9/10-Pages[i].offsetTop;
+					Pages[i].style.maxWidth =document.body.clientWidth-2*Pages[i].offsetLeft;
+					Pages[i].style.maxHeight=document.body.clientHeight*9/10-Pages[i].offsetTop;
+					Pages[i].style.paddingLeft=Pages[i].offsetLeft/2;
+					Pages[i].style.zIndex=-1;
+					Pages[i].style.opacity="0";
+				}
+				//Menu.style.width=document.body.clientWidth;
+				qLoadId("bText").style.fontSize=50/100*(qLoadId("SlideShowButton").clientHeight)+'px';
+				currentSlide=0;
+				Show();
+				Randomize();
+			}
+			
+			var size=[window.width,window.height];
+			
+			window.onresize=function() {
+				if(gallery) window.resizeTo(size[0],size[1]);
+				else {
+					for(i=0;i<Pages.length;i++) {
+						Pages[i].style.marginTop   =document.body.clientHeight/10;
+						Pages[i].style.width =document.body.clientWidth-2*Pages[i].offsetLeft;
+						Pages[i].style.height=document.body.clientHeight*9/10-Pages[i].offsetTop;
+						Pages[i].style.maxWidth =document.body.clientWidth-2*Pages[i].offsetLeft;
+						Pages[i].style.maxHeight=document.body.clientHeight*9/10-Pages[i].offsetTop;
+							Pages[i].style.opacity="0";
+					}
+					qLoadId("bText").style.fontSize=50/100*(qLoadId("SlideShowButton").clientHeight)+'px';
+					Show();
+					size=window.width,window.height;
+				}
+			}
+			
+			window.onkeydown=function() {
+				if(free && qLoadId("SD3").style.opacity>=1) {
+					if(event.keyCode==37) {
+						enabled=true;
+						xShow(-1,true);
+					}
+					if(event.keyCode==39) {
+						enabled=true;
+						xShow( 1,true);
+					}
+				}
+			}
+			
+		</script>
+		
+		<script>
+			var free=true;
+			
+			function Warn() {
+				if(gallery) {
+					alert("Te rugăm să oprești galeria înainte de a schimba pagina.");
+				}
+			}
+			
+			function Show() {
+				Warn();
+				if(free) {
+					free=false;
+					var elem=Pages[currentSlide];
+					var alpha=0;
+					var evid=setInterval(frame,100);
+					function frame() {
+						if(alpha>=1) {
+							clearInterval(evid);
+							free=true;
+						}
+						else {
+							alpha+=0.1;
+							elem.style.opacity=alpha;
+							elem.style.zIndex=1;
+						}
+					}
+				}
+			}
+			
+			function Hide() {
+				Warn();
+				if(free) {
+					free=false;
+					var elem=Pages[currentSlide];
+					var alpha=1;
+					var evid=setInterval(frame,100);
+					function frame() {
+						if(alpha<=0) {
+							clearInterval(evid);
+							free=true;
+						}
+						else {
+							alpha-=0.1;
+							elem.style.opacity=alpha;
+							elem.style.zIndex=-1;
+						}
+					}	
+				}
+			}
+			
+			function GoTo(ord) {
+				if(ord!=currentSlide) {
+					Warn();
+					if(free) {
+						free=false;
+						var elem=Pages[currentSlide];
+						var enew=Pages[ord];
+						var alpha=1;
+						var evid=setInterval(frame,100);
+						function frame() {
+							if(alpha<=0) {
+								clearInterval(evid);
+								free=true;
+								currentSlide=ord;
+							}
+							else {
+								alpha-=0.1;
+								elem.style.opacity=alpha;   elem.style.zIndex=-1;
+							
+								enew.style.opacity=1-alpha; enew.style.zIndex=1;
+							}
+						}	
+					}
+				}
+			}
+			
+			function Next() {
+				GoTo((currentSlide+1)%Pages.length);
+			}
+			
+			function Prev() {
+				var n;
+				//Goto( ((currentSlide==0) ? (Pages.length-1) : (CurrentSlide-1)) ); de ce nu merge?
+				if(currentSlide==0) n=Pages.length-1;
+				else n=currentSlide-1;
+				GoTo(n);
+			}
+			
+		</script>
+		
+	</head>
+	
+	<body>
+		<!--span style="color:white; position:absolute; top:0; left:0; font-size:14;">Originally created and designed by Ysaika.<br/>
+		 I do not own the images and the information. <br>
+		 Tested on Google Chrome and Microsoft Edge.</span-->
+		<img id="Background" src="res/bg.gif" width="100%" height="100%" style="position:fixed; top:0; let:0;"/> 
+		<img src="res/galaxy.jpg" style="position:fixed; top:0; left:0; z-index:0; width:100%; height:10%;"/>
+		<div id="Head">
+			<div id="Tester" style="z-index:26; display:none;">
+				<button onclick="Prev()"> <<<<<< </button>
+				<button onclick="Show()"> Show </button>
+				<button onclick="Hide()"> Hide </button>
+				<button onclick="Next()"> >>>>>> </button>	
+			</div>
+		</div>
+		<div id="Menu">
+			<center>
+				<button class="MenuItem" onclick="GoTo(0); document.title='Universul - '+this.innerHTML;">Home</button>
+				<button class="MenuItem" onclick="GoTo(1); document.title='Universul - '+this.innerHTML;">Sistemul Solar</button>  
+				<button class="MenuItem" onclick="GoTo(2); document.title='Universul - '+this.innerHTML;">Galerie</button>  
+				<button class="MenuItem" onclick="GoTo(3); document.title='Universul - '+this.innerHTML;">Quiz</button>				
+			</center>
+		</div>
+		
+		<div class="SlideDiv" id="SD1" style="background-color:rgba(0,0,255,0.5); color:white; font-size:16px;"> 
+			<h1>Universul</h1>
+			<p style="text-align:right; padding:3px; font-size:14px;"> <b>Motto</b> <i>„Cunoașterea cosmosului este mai mult decât un lux pentru oameni cultivați. <br/> Ea este temelia unei conștiințe cosmice; ea relevă marea răspundere ce ne revine pentru viitorul omenirii.”</i> <br/> Hubert Reeves  <br/></p>
+			Universul reprezintă lumea în totalitatea ei, probabil că nemărginită în timp și spațiu, infinit de variată în ceea ce privește formele pe care le iau materia, energia și informația în procesul dezvoltării lor perpetue.
+			<h3>Materia</h3>
+			Nu există o definiție universal acceptată a termenului „materie”. Cel mai des se înțelege prin asta însă partea masivă a universului. În modelul standard al fizicii de particule, materia este alcătuită din particule elementare, obiecte punctiforme având diverse proprietăți. Din aceste proprietăți face parte și masa particulei, o măsură a inerției, dar și a influenței forței gravitaționale asupra particulei respective. Orice obiect care are masă și ocupă spațiu poate fi considerat deci material. 
+			În teoria relativității, masa este echivalată cu energia, ceea ce motivează extinderea definiției materiei pentru a include și unele fenomene pur energetice, cum ar fi de exemplu câmpurile de forțe. Fizica de particule cuantifică acest aspect împărțind particulele elementare în două categorii: cele care alcătuiesc materia „de zi cu zi”, care constă în mare parte din atomi, numite fermioni, și așa numiții bosoni, particule elementare responsabile pentru acțiunea forțelor. După această definiție, numai materia fermionică este considerată materie. Antimateria este la rândul ei o formă a materiei. În domeniul cosmologiei și astrofizicii se constată o discrepanță între comportamentul observat al unor structuri masive (de pildă galaxiile) și predicțiile teoretice. Soluția propusă este postularea unui nou tip de materie „întunecată”, care alcătuiește o mare parte din materia din univers, dar care nu poate fi observată direct întrucât nu reflectă radiația electromagnetică (lumină).
+			<h3>Formarea Universului </h3>
+			Astronomeii au calculat că universul s-a format cu 13.798 ± 0.037 miliarde de ani în urmă. Teoria Big Bang-ului (engl. „marea explozie”) explică în mare parte formarea universului, pe care o aseamănă cu o explozie de proporții. Din momentul formării universului a avut loc o expansiune a acestuia care are loc și astăzi. Astronomii caută să descopere structura, comportamentul și evoluția materiei și energiei existente în univers. Despre evoluția viitoare a universului există o serie de teorii. Într-unul din scenarii expansiunea universului va continua până la deșirarea acestuia (Big Rip, engl. „marea ruptură”), iar în altul expansiunea va atinge un maximum, după care universul va începe să se micșoreze (Big Crunch, engl. „marea compactare”). Scenariul în care după acest colaps are loc un nou Big Bang poartă numele de Big Bounce (de la engl. to bounce, „a ricoșa” / „a sări”).
+			Astronomii cred că în prima fracțiune de secundă de după explozie, universul s-a extins în proporții de milioane de ori mai mari decât starea inițială, iar în următoarea fracțiune de secundă extinderea a devenit mai înceată, acesta răcindu-se și lăsând loc particulelor de materie să se formeze. Când universul a ajuns la prima sa secundă de existență, se presupune că atunci s-au format protonii, iar în următoarele 1.000 de secunde a urmat era nucleosintezei, era în care s-au format nuclee de deuteriu și care este prezent în universul de acum. Tot în aceste prime 1.000 de secunde s-au format și unele nuclee de litiu, beriliu și heliu.
+			Când universul a ajuns la vârsta de un milion de ani a ajuns sa se răcească până la temperaturi de 3300 °C în medie în care protonii și nucleele mai grele s-au format în urma nucleosintezei, putând apoi să se combine cu electronii formând atomii. Înainte ca electronii să se combine cu nucleele, circulația radiațiilor prin spațiu era dificilă, radiațiile în forma fotonilor nu puteau traversa spațiul fără a intra în coliziune cu electronii, dar odată cu combinarea protonilor cu electronii care au format hidrogenul, traversarea fotonilor a fost ușurată. Radiațiile în forma fotonilor au caracteristicile gazului. Din momentul în care radiațiile au fost eliberate, totul s-a răcit până la -270 °C, numindu-se radiație cosmică de fond. Aceste radiații au fost detectate prima dată de către radiotelescoape și apoi de către sonda spațială COBE.
+			Între anul 2 milioane și anul 4 milioane după Big Bang s-au format quasarii, galaxii extrem de energice. O populație de stele s-a format din gazul și praful interstelar, apoi s-au contractat în a forma galaxiile. Această primă populație se numește Populația I și a fost formată aproape în întregime din hidrogen și heliu. Stelele formate au evoluat creând la rândul lor alte elemente mai grele care au dus la fuziuni nucleare explodând și formând supernovele.
+			Mai târziu s-a format Populația II, din care face parte și Soarele nostru, și conține elemente grele formate în istorie. Soarele nostru s-a format acum 5 miliarde de ani și se află la jumătatea vieții sale. Se presupune că viața soarelui nostru este de aproximativ 11 miliarde de ani.
+			Acum 4,6 miliarde de ani s-a format sistemul solar. Cea mai veche fosilă a unui organism viu datează de acum peste 3,5 miliarde de ani.
+			<br><br>
+			
+			<p style="text-align:right;">Sursa: <a target="_blank" href="https://www.wikipedia.org" style="color:red;">www.wikipedia.org</a> </p>
+			
+		</div>
+			
+		
+		<div class="SlideDiv" id="SD2" style="background-color:rgba(0,0,255,0.5); color:white" onmousedown="return false;"> 
+			<h1>Sistemul solar</h1>
+			<p style="font-size:36">Click peste planetele sistemului solar pentru a le vedea îndeaproape.</p>
+			<script>				
+				function setInfoWindow(name,src,info) {
+					document.getElementById('Name').innerHTML=name;
+					document.getElementById('Picture').src=src;
+					document.getElementById('Info').innerHTML=info+'<br><br><br><br>';
+					document.getElementById('iWindow').style.display='inline';
+					document.getElementById('Content').scrollTop=0;
+				}
+			</script>
+			<div style="display:inline-block;">
+				<div style="position:relative;">
+					<img src="res/solar.png" usemap="#solarsystem"> </img>
+					<map name="solarsystem">
+						<area shape="circle" coords="340 300 60" onclick="setInfoWindow('Soarele','res/sun.png','Soarele este steaua aflată în centrul Sistemului nostru Solar. Masa totală a Pământului, a tuturor celorlalte planete, asteroizi, meteoroizi, comete precum și a prafului interplanetar care orbitează în jurul Soarelui, reprezintă abia 0,14% din masa întregului Sistem Solar, în timp ce masa Soarelui reprezintă 99,86%. Energia provenită de la Soare (sub forma luminii, căldurii ș.a.) face posibilă întreaga viață de pe Pământ, de exemplu prin fotosinteză, iar prin intermediul căldurii și clima favorabilă. În cadrul discuțiilor dintre cercetători, Soarele este desemnat uneori și prin numele său latin Sol, sau grecesc Helios. Simbolul său astronomic este un cerc cu un punct în centru: Unele popoare din Antichitate îl considerau ca fiind o planetă.');">
+						<area shape="circle" coords="423 288 14" onclick="setInfoWindow('Mercur','res/mercury.png','Mercur este planeta cea mai apropiată de Soare, înconjurându-l o dată la fiecare 88 zile pământene. Luminozitatea sa variază între -2,0 și 5,5 în magnitudine aparentă, dar nu este ușor de văzut fiindcă cea mai mare separare unghiulară (cea mai mare elongație) față de Soare este de doar 28,3°, însemnând că se poate vedea doar imediat după apusul Soarelui. În perioada 1974 - 1975, Mercur a fost studiată cu ajutorul sondei Mariner 10, care a cartografiat doar 40 - 45 % din suprafața planetei. Începând din 2011, sonda spațială MESSENGER orbitează în jurul planetei pentru a studia compoziția chimică, geologia și câmpul magnetic.');">
+						<area shape="circle" coords="396 205 16" onclick="setInfoWindow('Venus','res/venus.png','Venus este a doua planetă ca distanță față de Soare în sistemul nostru solar. Situată la 108 milioane km de Soare, Venus își parcurge orbita în 224,7 de zile. Rotația în jurul propriei sale axe este foarte lentă, durează 243 de zile și are loc de la vest la est, în sens invers față de rotația celorlalte planete. Cu un diametru de 12.100 km, Venus este, ca poziție, a doua planetă (pornind de la Soare) din sistemul solar, orbita sa fiind cuprinsă între cea a planetelor Mercur și Pământ. Venus este cu foarte puțin mai mică decât Pământul, dar atmosfera sa este foarte diferită: în principal, aceasta este compusă din 96 % gaz carbonic și 3,5 % azot. Ea este înconjurată de un văl gros de nori repartizați în trei straturi situate la o altitudine între 50 și 70 km. Unii dintre aceștia provoacă ploi de acid sulfuric, o substanță chimică foarte agresivă chimic. Pe Venus temperatura este foarte ridicată. De fapt, gazul carbonic acumulat în atmosferă acționează sub efectul razelor Soarelui ca geamurile unei sere: temperatura la sol ajunge până 460 °C. Suprafața planetei Venus este plină de platouri vulcanice, circa 80 % având o variație a înălțimii nu mai mare de 1 km. Se pare că mulți vulcani sunt încă activi. La fel ca și Mercur, Venus nu are sateliți.');">
+						<area shape="circle" coords="285 174 21" onclick="setInfoWindow('Pământ(Terra)','res/earth.png','Planeta Pământ (numită și Terra sau „Planeta albastră”) este a treia planetă după distanța față de Soare și a cincea ca mărime în Sistemul Solar. Când desemnează planeta (și nu solul), cuvântul se scrie cu majusculă. Terra face parte dintre planetele interioare ale Sistemului Solar (planetele aflate în interiorul centurii de asteroizi). Este cea mai mare planetă telurică din sistemul solar, și singura din Universul observabil cunoscută ca adăpostind viață (controverse legate de existența vieții extraterestre continuă să existe).')">
+						<area shape="circle" coords="476 400 16" onclick="setInfoWindow('Marte','res/mars.png','Marte este, pornind dinspre Soare, a patra planetă a Sistemului Solar, a cărei denumire provine de la Marte, zeul roman al războiului. Uneori mai este numită și „planeta roșie” datorită înfățișării sale văzută de pe Pământ. Culoarea roșiatică se explică prin prezența pe suprafața sa a oxidului de fier.')">
+						<area shape="circle" coords="249 474 33" onclick="setInfoWindow('Jupiter','res/jupiter.png','Jupiter este a cincea planetă de la Soare și este cea mai mare dintre toate planetele din Sistemul solar. Are diametrul de 11 ori mai mare decât cel al Pământului, o masă de 318 ori mai mare și un volum de 1300 ori mai mare.<br>Jupiter este al patrulea obiect de pe cer ca strălucire (după Soare, Lună și Venus; și câteodată Marte). A fost cunoscut din timpuri preistorice. Descoperirea de către Galileo Galilei și Simon Marius⁠(d), în 1610, ai celor patru mari sateliți ai lui Jupiter: Io, Europa, Ganymede și Callisto (cunoscute ca sateliții Galileeni) a fost prima descoperire a unui centru de mișcare aparent necentrat pe Pământ. A fost un punct major în favoarea teoriei heliocentrice de mișcare a planetelor a lui Nicolaus Copernic; susținerea de către Galileo a teoriei coperniciene i-a adus probleme cu Inchiziția.')">
+						<area shape="circle" coords="514 150 25" onclick="setInfoWindow('Saturn','res/saturn.png','Saturn este a șasea planetă de la Soare și a doua ca mărime din Sistemul Solar, după Jupiter. Împreună cu Jupiter, Uranus și Neptun, Saturn este clasificat ca un gigant gazos. Aceste planete sunt numite corpuri joviane, însemnând planete asemănătoare cu Jupiter.')">
+						<area shape="circle" coords="291  64 13" onclick="setInfoWindow('Uranus','res/uranus.png','Uranus este a șaptea planetă de la Soare și a treia ca mărime (după diametru). Uranus este mai mare ca diametru însă mai mică sub aspectul masei decât Neptun.Plasat pe o orbită de 19 ori mai îndepărtată de Soare decât cea a Pământului, Uranus, ca și Neptun, primește foarte puțină căldură. Cu un diametru de 52.000 km, Uranus este de 2 ori mai mic decât Saturn, dar de 5 ori mai mare decât Terra (Pământul). Este înconjurat de inele întunecate și are 27 sateliți.');">
+						<area shape="circle" coords=" 71 211 21" onclick="setInfoWindow('Neptun','res/neptun.png','Neptun este a opta planeta de la Soare din sistemul solar. Numită după zeul roman al mării, este a patra planetă după diametru și a treia după masă. Neptun are o masă de 17 ori mai mare decât cea a Pământului și puțin mai mare decât masa lui Uranus, care este de 15 ori mai greu decât Pământul, dar nu la fel de dens. Neptun orbitează în jurul Soarelui la o distanță de 30,1 unități astronomice, ceea ce înseamnă că orbita sa este de aproximativ 30 de ori mai mare decât orbita Pământului. Simbolul astronomic al lui Neptun este ♆, o variantă modificată a tridentului zeului Neptun.')">
+						<area shape="circle" coords=" 19 306 12" onclick="setInfoWindow('Pluto','res/pluto.png','Pluto (numit adesea Pluton, mai ales în lucrări mai vechi) este o planetă pitică din Sistemul Solar, a doua ca masă după Eris și, ca volum, cea mai mare planetă pitică. A fost descoperită în anul 1930 de către astronomul american Clyde William Tombaugh. Obiectele cu orbite asemănătoare cu cea a lui Pluto se mai numesc plutine. Până în 2006 a fost considerată a noua planetă a Sistemului Solar, atât în ordinea distanței față de Soare, cât și a descoperirii. <br> Pluto împreună cu satelitul său Charon sunt uneori considerate sistem binar, deoarece baricentrul orbitelor nu se află în interiorul niciunuia dintre cele două corpuri.')">
+						<area shape="rect"   coords="467,549,539,568" onclick="setInfoWindow('Centura Kuiper','res/kuiper.gif','Centura Kuiper este centura de materie primordială ce înconjoară Sistemul Solar, extinzându-se de la orbita planetei Neptun până mult în afara Sistemului Solar (actualmente se consideră că se află la între 30 UA și 50 UA depărtare față de Soare). Obiectele astronomice (sau cerești) ce se află în așa-zisul Disc împrăștiat (scattered disk) sunt cele care poartă un nume colectiv de obiecte trans-Neptuniene. Interacțiunea cu planeta Neptun este cunoscută pentru crearea de distorsiuni de revoluție a tuturor obiectelor cerești ale căror orbite intersectează pe cea a planetei, este și cauza presupusă a limitei aparente de 48 UA, deși modelele existente azi trebuie să explice multe puncte neclare ale modelului și teoriei. De curând, în această zonă au fost descoperite patru potențiale planete: 2003UB313 (diametru 2600 km), Charon (1250 km), Quaoar (circa 1250 km) și Sedna (1600 km). 2003UB313, cel mai mare obiect descoperit în Sistemul Solar de la identificarea lui Triton în 1846, este mai mare decât Pluto și are chiar și o mică lună. Această planetă orbitează în jurul Soarelui în 557 de ani tereștri și se află la 14,6 miliarde de kilometri de Soare. Centura Kuiper a fost denumită astfel în cinstea lui Gerard Peter Kuiper (1905 - 1973), astronom olandez-american care a prezis și demonstrat existența acestei centuri de materie a Sistemului Solar.')">
+					</map>
+				</div>
+				<div id="iWindow" style="position:fixed; top:30%; right:10%; background-color:blue; width:30%; height:40%; overflow:none; display:none; opacity:0.3;" 
+					onmousedown="return false;" onmouseover="this.style.opacity=1;" onmouseout="this.style.opacity=0.3;">
+					<div id="TitleBar" style="width:100%; height:10%; background-color:blue; opacity:1; z-index:4;">
+						<button style="position:absolute; background-color:red; color:white; right:0; top:0; height:8%;" onclick="document.getElementById('iWindow').style.display='none';">X</button>
+						<span style="position:absolute; left:0; top:0;"> Sursa: <a id="SrcLnk" target="_blank" href="https://www.wikipedia.org" style="color:red;"> www.wikipedia.org </a> </span>		
+					</div>
+					<div id="Content" style="position:absolute; top:10%; left:0; width:100%; height:90%; overflow:auto; z-index:1;">
+						<center>
+							<h4 id="Name"></h4>
+							<img id="Picture" width="200px" height="200px"> </img>
+						</center>
+						<p id="Info"></p>	
+					</div>
+					
+				</div>
+			</div>
+		</div>		
+		
+		<div class="SlideDiv" id="SD3" style="background-color:transparent; color:white"> 
+			<div style="position:absolute; top:12.5%; left:12.5%; width:75%; height:75%;">
+				<img id="iShow" style="position:relative; width:100%; height:100%;" src="res/gallery/gal1.jpg"/>
+				<button class="GalButton" id="GBPrev" onclick="Iteration=600; enabled=true; xShow(-1,true);"> <</button>
+				<button class="GalButton" id="GBNext" onclick="Iteration=600; enabled=true; xShow( 1,true);"> ></button>	
+			</div>
+			<button class="iButton" id="SlideShowButton" onclick="iButtonFunc();"><pre>    <span id="bText">Auto</span>    </pre></button>
+			<script>
+				var enabled=false;
+				var gallery=false;;
+				const Nimg=6;
+				var crtimg=1;
+				var Iteration=600;
+				
+				function iButtonFunc() {
+					Iteration=1000;
+					if(enabled) document.getElementById("bText").innerHTML="Auto";
+					else document.getElementById("bText").innerHTML="Stop";
+					xShow(-1,false);
+					enabled=!enabled;
+				}
+				
+
+				function xShow(rel,exit) {
+					if(free) {
+						free=false;
+						gallery=true;
+						var k=0;
+						var evid=setInterval(update,1);
+						function update() {
+							if(enabled) {
+								qLoadId("GBPrev").disabled=true;
+								qLoadId("GBNext").disabled=true;
+								if(k==0) {
+								crtimg=(crtimg+rel)%Nimg; 
+								//qLoadId('bText').innerHTML=crtimg;
+								if(crtimg==0) crtimg=Nimg;
+								document.getElementById('iShow').src="res/gallery/gal"+crtimg+".jpg";
+								}
+								k=(k+1)%Iteration;
+								document.getElementById('iShow').style.opacity=k/(Iteration/2);
+								if(document.getElementById('iShow').style.opacity>=1) if(exit) enabled=false;
+							}
+							else {
+								free=true;
+								gallery=false;
+								qLoadId("GBPrev").disabled=false;
+								qLoadId("GBNext").disabled=false;
+								clearInterval(evid);
+							}
+						}
+					}
+				}
+			</script>
+		</div>	
+		
+		<div class="SlideDiv" id="SD4" style="background-color:transparent; color:white;">
+			<div class="QuizWindow" id="qHome">
+				<h2 style="margin-left:2%;">Alegeți o categorie:</h2>
+				<ul>					
+					<p><b>Observație: </b>Numărul întrebării este însoțit de o steluță care indică dificultatea întrebării, în felul următor:</p>
+					<ul id="DifficultyList">
+						<li>
+							<p class="QEasy">Întrebări de dificultate <span style="color:lightgreen">ușoară</span></p>
+						</li>
+						<li>
+							<p class="QMedium">Întrebări de dificultate <span style="color:orange">medie</span></p>
+						</li>
+						<li>
+							<p class="QHard">Întrebări de dificultate <span style="color:red">grea</span></p>
+						</li>
+					</ul>
+					<p>Succes!</p>
+					<li style="list-style-type:none;"><button class="QuizButton" onclick="StartQuiz('qSistSol');">Sistemul solar - Quiz</button></li>
+					<li style="list-style-type:none;"><button class="QuizButton" onclick="StartQuiz('qMiniGame');">Sistmul solar - Minigame</button></li>
+				</ul>
+			</div>
+			
+			<div class="QuizWindow" id="qSistSol" style="display:none;">
+				<h2 id="QuizHeader" style="margin-left:2%;">Sistemul solar</h2>
+				<div style="margin-left:2%; margin-top:3%; margin-bottom:2%;">
+					<button class="QuizButton" style="display:inline; margin:-1%;" onclick="resetRadioGroups('SistSol');">Resetează</button>
+					<button class="QuizButton" style="display:inline; margin:-1%;" onclick="EndQuiz();">Înapoi</button>
+				</div>
+				<ol>
+					<!--Q1-->
+					<li>
+						<div id="wqSistSol1" class="classSistSol QEasy">
+							<p>Care sunt formele de existență ale Universului?</p>
+							<div id="aSistSol1">
+								<input type="radio" name="rSistSol1" onchange="setValue('SistSolA1','A');">Energie</input> <br/>
+								<input type="radio" name="rSistSol1" onchange="setValue('SistSolA1','B');">Materie</input> <br/>
+								<input type="radio" name="rSistSol1" onchange="setValue('SistSolA1','C');">Informație</input> <br/>
+								<input type="radio" name="rSistSol1" onchange="setValue('SistSolA1','D');">Toate cele de mai sus</input> <br/><br/>
+							</div>
+							<p class="qAnswer">Your Answer:<span id="SistSolA1">-</span>; Correct:<span id="SistSolC1">D</span></p>
+						</div>
+					</li>
+					<!--Q2-->
+					<li>
+						<div id="wqSistSol2" class="classSistSol QEasy">
+							<p>Care dintre următoarele este ordinea corectă a planetelor, începând de la Soare?</p>
+							<div id="aSistSol2">
+								<input type="radio" name="rSistSol2" onchange="setValue('SistSolA2','A');">Marte, Mercur, Pluto</input> <br/>
+								<input type="radio" name="rSistSol2" onchange="setValue('SistSolA2','B');">Jupiter, Saturn, Venus</input> <br/>
+								<input type="radio" name="rSistSol2" onchange="setValue('SistSolA2','C');">Pământ, Saturn, Uranus</input> <br/>
+								<input type="radio" name="rSistSol2" onchange="setValue('SistSolA2','D');"></input>Mercur, Neptun, Jupiter<br/><br/>
+							</div>
+							<p class="qAnswer">Your Answer:<span id="SistSolA2">-</span>; Correct:<span id="SistSolC2">C</span></p>
+						</div>
+					</li>
+					<!--Q3-->
+					<li>
+						<div id="wqSistSol3" class="classSistSol QMedium">
+							<p>Ce substanță conferă planetei Marte culoarea caracteristică?</p>
+							<div id="aSistSol3">
+								<input type="radio" name="rSistSol3" onchange="setValue('SistSolA3','A');">Sulfatul de siliciu</input> <br/>
+								<input type="radio" name="rSistSol3" onchange="setValue('SistSolA3','B');">Oxidul de fier</input> <br/>
+								<input type="radio" name="rSistSol3" onchange="setValue('SistSolA3','C');">Acidul sulfuric</input> <br/>
+								<input type="radio" name="rSistSol3" onchange="setValue('SistSolA3','D');">Azotul</input><br/><br/>
+							</div>
+							<p class="qAnswer">Your Answer:<span id="SistSolA3">-</span>; Correct:<span id="SistSolC3">B</span></p>
+						</div>
+					</li>
+					<!--Q4-->
+					<li>
+						<div id="wqSistSol4" class="classSistSol QHard">
+							<p>Ce sondă spațială orbitează în jurul planetei Mercur începând din anul 2011?</p>
+							<div id="aSistSol3">
+								<input type="radio" name="rSistSol4" onchange="setValue('SistSolA4','A');">VOYAGER 1</input> <br/>
+								<input type="radio" name="rSistSol4" onchange="setValue('SistSolA4','B');">STEREO</input> <br/>
+								<input type="radio" name="rSistSol4" onchange="setValue('SistSolA4','C');">MESSENGER</input> <br/>
+								<input type="radio" name="rSistSol4" onchange="setValue('SistSolA4','D');">VOYAGER 2</input><br/><br/>
+							</div>
+							<p class="qAnswer">Your Answer:<span id="SistSolA4">-</span>; Correct:<span id="SistSolC4">C</span></p>
+						</div>
+					</li>
+					<!--Q5-->
+					<li>
+						<div id="wqSistSol5" class="classSistSol QHard">
+							<p>Planeta Neptun a fost denumită după zeul roman al ...</p>
+							<div id="aSistSol5">
+								<input type="radio" name="rSistSol5" onchange="setValue('SistSolA5','A');">mării</input> <br/>
+								<input type="radio" name="rSistSol5" onchange="setValue('SistSolA5','B');">fulgerului</input> <br/>
+								<input type="radio" name="rSistSol5" onchange="setValue('SistSolA5','C');">războiului</input> <br/>
+								<input type="radio" name="rSistSol5" onchange="setValue('SistSolA5','D');">focului</input><br/><br/>
+							</div>
+							<p class="qAnswer">Your Answer:<span id="SistSolA5">-</span>; Correct:<span id="SistSolC5">A</span></p>
+						</div>
+					</li>
+				</ol>
+				<p><pre style="display:inline;">Result: </pre><span id="ACorrectSistSol" style="display:inline;">-</span></p>
+				<div style="margin-left:2%; margin-top:3%; margin-bottom:2%;">
+					<button class="QuizButton" style="display:inline; margin:-1%;" onclick="check('SistSol');">Verifică!</button>
+					<button class="QuizButton" style="display:inline; margin:-1%;" onclick="resetRadioGroups('SistSol');">Resetează</button>
+					<button class="QuizButton" style="display:inline; margin:-1%;" onclick="EndQuiz();">Înapoi</button>
+				</div>
+			</div>
+			
+			<div class="QuizWindow" id="qMiniGame" style="display:none;">
+				<h1><pre style="display:inline;">  </pre>Minigame</h1>
+				<p>Pune în ordine etichetele cu numele planetelor Sistemului Solar, începând de la Soare! Fă click pe
+				numele unei planete pentru a o trimite în fața listei!</p>
+				
+				<button class="QuizButton" onclick="Randomize();" style="display:inline;">Amestecă!</button>
+				<button class="QuizButton" onclick="PlanetCheck();" style="display:inline;">Verifică!</button>
+				
+				<span id="PlanetResult"></span>
+				
+				<ol id="PlanetsList">
+					<li onclick="PlanetSwap(0,0);"></li>
+					<li onclick="PlanetSwap(1,0);"></li>
+					<li onclick="PlanetSwap(2,0);"></li>
+					<li onclick="PlanetSwap(3,0);"></li>
+					<li onclick="PlanetSwap(4,0);"></li>
+					<li onclick="PlanetSwap(5,0);"></li>
+					<li onclick="PlanetSwap(6,0);"></li>
+					<li onclick="PlanetSwap(7,0);"></li>
+					<li onclick="PlanetSwap(8,0);"></li>
+				</ol>
+				
+				
+				<button class="QuizButton" onclick="EndQuiz();">Înapoi</button>
+				
+				<script>
+					function Randomize() {
+						var Planets=["Mercur","Venus","Pământ","Marte","Jupiter","Saturn","Uranus","Neptun","Pluto"];
+						function swap(i,j) {
+							var aux=Planets[i];
+							Planets[i]=Planets[j];
+							Planets[j]=aux;
+						}
+						var k=9;
+						for(i=0;i<9;i++) {
+							var j=Math.floor(Math.random()*(k-1));
+							qLoadId("PlanetsList").getElementsByTagName("li")[i].innerHTML=Planets[j];
+							swap(j,k-1);
+							k--;	
+						}
+						qLoadId("PlanetResult").innerHTML="";
+					}
+					
+					function PlanetSwap(i,j) {
+						var aux=qLoadId("PlanetsList").getElementsByTagName("li")[i].innerHTML;
+						qLoadId("PlanetsList").getElementsByTagName("li")[i].innerHTML=qLoadId("PlanetsList").getElementsByTagName("li")[j].innerHTML;
+						qLoadId("PlanetsList").getElementsByTagName("li")[j].innerHTML=aux;	
+					}
+					
+					function PlanetCheck() {
+						var correct  = ["Mercur","Venus","Pământ","Marte","Jupiter","Saturn","Uranus","Neptun","Pluto"];
+						var elements = qLoadId("PlanetsList").getElementsByTagName("li");
+						var ok=true;
+						for(i=0;(i<9) && ok;i++) {
+							ok=ok && (correct[i]==elements[i].innerHTML);
+							
+						}						
+						if(ok) {
+								qLoadId("PlanetResult").style.color="lime";
+								qLoadId("PlanetResult").innerHTML='Bravo! <img src="res/ok.gif" style="width:30px; height:30px;"/>';
+							}
+							else {
+								qLoadId("PlanetResult").style.color="red";
+								qLoadId("PlanetResult").innerHTML='Mai încearcă! <img src="res/wrong.gif" style="width:30px; height:30px;"/>';
+							}
+						
+					}
+				
+				</script>
+			</div>
+			
+			<script>
+				var crtQuiz="none";
+				function StartQuiz(name) {
+					qLoadId("qHome").style.display="none";
+					qLoadId(name).style.display="block";
+					crtQuiz=name;
+				}
+				
+				function EndQuiz() {
+					if(crtQuiz!="none") {
+						qLoadId(crtQuiz).style.display="none";
+						qLoadId("qHome").style.display="block";
+					}
+				}
+				
+				function setValue(id,value) {
+					qLoadId(id).innerHTML=value;
+				}
+				
+				function compareAnswers(ida,idc) {
+					return qLoadId(ida).innerHTML==qLoadId(idc).innerHTML;
+				}
+				
+				function check(qclass) {
+					var Quiz=document.getElementsByClassName("class"+qclass);
+					var nr=0;
+					for(i=1;i<=Quiz.length;i++)
+						if(compareAnswers(qclass+"A"+i,qclass+"C"+i)) nr+=1;
+					var f=nr/Quiz.length; //success ratio
+					qLoadId("ACorrect"+qclass).style.color="rgb("+(255*(1-f))+","+(255*f)+",0)";
+					if(nr==0) qLoadId("ACorrect"+qclass).innerHTML="Nu ai răspuns corect la nicio întrebare.";
+					else
+						if(nr==1) qLoadId("ACorrect"+qclass).innerHTML="Ai răspuns corect la o întrebare.";
+						else
+							if(nr==Quiz.length) qLoadId("ACorrect"+qclass).innerHTML="Felicitări! Ai răspuns corect la toate întrebările."
+							else qLoadId("ACorrect"+qclass).innerHTML="Ai răspns corect la "+nr+" din "+Quiz.length+" întrebări.";
+				}
+				
+				function resetRadio(name) {
+					var el = document.getElementsByName(name);
+					for(var i=0;i<el.length;i++)
+						el[i].checked = false;
+				}
+				
+				function resetRadioGroups(name) {
+					var Quiz=document.getElementsByClassName("class"+name);
+					for(i=1;i<=Quiz.length;i++) {
+						resetRadio("r"+name+i);
+						qLoadId(name+"A"+i).innerHTML="-";
+					}
+					qLoadId("ACorrect"+name).style.color="white";
+					qLoadId("ACorrect"+name).innerHTML="-";
+				}
+			</script>
+		</div>
+		
+		<div id="LeftMenu">
+			<div class="LMD">
+				<img class="LMButton" src="res/icons/constelatie.png" onclick="accessPage('res/html/constelatii.html');"/>
+				<p>Constelatii</p>
+			</div>
+			<div class="LMD">
+				<img class="LMButton" src="res/icons/stea.png" onclick="accessPage('res/html/stele.html');"/>
+				<p>Stele</p>
+			</div>
+			<div class="LMD">
+				<img class="LMButton" src="res/icons/ufo.png" onclick="accessPage('res/html/ozn.html');"/>
+				<p>OZN-uri?</p>
+			</div>
+		</div>
+		
+		
+	</body>
+</html>

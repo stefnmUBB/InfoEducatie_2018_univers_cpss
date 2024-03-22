@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="../icon.png">
+		<link rel="stylesheet" type="text/css" href="res/style.css">
+		<script src="../utils.js"></script>
+		<title>Constelații</title>
+		<style>
+			#Background {
+				background-image:url('res/bg_constelatii.png');
+			}
+			.Bubble {
+				position:absolute;
+				top:65%;
+				display:inline-block;
+				width:15%;
+				border-radius:50%;
+			}
+			
+			@keyframes ba1 {
+				from { left:20%; }
+				to { left:25%; }
+			}
+			
+			@keyframes ba2 {
+				from { left:20%; }
+				to { left:35%; }
+			}
+			
+			@keyframes ba3 {
+				from { left:20%; }
+				to { left:45%; }
+			}
+			
+			@keyframes ba4 {
+				from { left:20%; }
+				to { left:55%; }
+			}
+			
+			#Animation #bubble1{
+				left:25%;
+				animation-name:ba1;
+				animation-duration:0.9s;
+			}
+			
+			#Animation #bubble2 {
+				left:35%;
+				animation-name:ba2;
+				animation-duration:1.5s;
+			}
+			
+			#Animation #bubble3 {
+				left:45%;
+				animation-name:ba3;
+				animation-duration:2.1s;
+			}
+			
+			#Animation #bubble4 {
+				left:55%;
+				animation-name:ba4;
+				animation-duration:2.7s;
+			}	
+
+			.Content {
+				background:linear-gradient(to bottom,rgba(0,0,128,0.7),rgba(0,0,128,0.1));
+				color:white;
+			}
+		</style>
+	</head>
+	
+	<body style="margin:0">
+		<div id="Background"></div>
+		<div id="Head">
+			<h1 id="Title">Descoperă constelațiile</h1>
+			<div id="Animation">
+				<img class="Bubble" id="bubble1" src="res/bubble/berbec.jpg"/>
+				<img class="Bubble" id="bubble2" src="res/bubble/taur.jpg"/>
+				<img class="Bubble" id="bubble3" src="res/bubble/sagetator.jpg"/>
+				<img class="Bubble" id="bubble4" src="res/bubble/horoscop.jpg"/>
+			</div>
+		</div>
+		<div class="Content">
+			<h1>Andromeda</h1>
+			<img src="res/andromeda.jpg"/>
+			<p>Această constelație mare din emisfera nordică aparține familiei Perseus, Cassiopeia și Cepheus. Numele stelei primare a Andromedei este Sirrah, care în limba arabă înseamnă ”ombilicul cailor”. Această asociere indică relația cu constelația Pegasus, de la granița Andromedei.</p>
+			<p>În mitologie, Andromeda era fiica Casiopeiei și a lui Cepheu. Din nefericire mama sa era atât de vanitoasă, încât se credea mult mai frumoasă decât fiicele lui Nereus, o zeitate a mării. Aceasta l-a infuriat pe Poseidon, care pentru a o pedepsi pe mamă, a legat-o pe Andromeda în lanțuri de o stâncă pe coasta mării, ca sacrificiu pentru un monstru marin, Cetus (o altă constelație sudică). Totuși, Andromeda a reușit să scape de o asemenea soartă, fiind salvată de către Perseus. Perseus, pentru a o salva, le-a cerut părinților să le-o dea pe Andromeda în căsătorie, ceea ce aceștia au acceptat bucuroși. Ca o eternă amintire, Cassiopeia a rămas pentru totdeaua înlănțuită de tronul său regal, și sortită să se rotească mereu pe cerul înstelat.</p>
+			<img src="res/andromeda_myth.jpg">
+		</div>
+		
+		<div class="Content">
+			<h1>Berbecul</h1>
+			<img src="res/aries.jpg">
+			<p>Aries este una dintre constelațiile zodiacului, poziționată pe planul ecliptic, având constelații vecine Pisces la vest și Taurus, la est.</p>
+			<p>Doar stelele Alpha și Beta – Hamal și Sheratan sunt ușor de recunoscut. Acestea reprezintă capul berbecului. Steaua Teegarden este o descoperire recentă în constelația Aries, una dintre cele mai apropiate stele de Soarele nostru, la o distanță de numai 12 ani lumină. Pare să fie o pitică roșie, din clasa stelelor cu temperaturi joase și luminozitate slabă. Aceasta este probabil explicația descoperirii sale târzii, deoarece are o magnitudine aparentă de numai 15,4.</p>
+		</div>
+		
+		<div class="Content" style="margin-bottom:10%;">
+			<h1>Racul</h1>
+			<img src="res/cancer.gif"/>
+			<p>Constelaţia Cancer este mică, vagă şi nu seamănă defel cu un crab sau cu un homar (sau rac de mare) – dar este una dintre cele 12 constelaţii ale zodiacului. Poziţionată pe planul ecliptic, Cancer se află dispusă între Gemini către vest şi Leo către est. Lynx către Nord şi Canis Minor și Hydra către sud. Constă din 5 stele principale și 76 de stele desemnate Bayer/Flamsteed.</p>
+			<p>În mitologie Cancer era un personaj din episodul celor 12 munci ale lui Hercule. În timp ce Hercules era ocupat luptându-se cu un monstru cu multe capete, Hydra, zeița Hera, care nu-l plăcea pe Hercule, a trimis Crabul pentru a-i distrage atenția. Cancer s-a prins cu cleștii de piciorul eroului dar nu a reușit să-l încetinească pe erou în lupta cu Hera și Hercules l-a zdrobit pe crab cu piciorul. Hera, recunoscătoare pentru efortul mititel dar eroic al micului crustaceu, i-a dat acestuia un loc pe cer. Crabul nu a fost învingător, așa că zeii nu i-au dat racului stele strălucitoare.</p>
+		</div>
+		
+		<div id="Menu" onmouseover="MenuHover=true" onmouseleave="MenuHover=false">
+			<img class="MenuIcon" src="res/exit.png" onclick="accessPage('../../index.html')"/>
+			<img class="MenuIcon" src="../icons/ufo.png" onclick="accessPage('ozn.html')"/>
+			<img class="MenuIcon" src="../icons/stea.png" onclick="accessPage('stele.html')"/>
+			<img class="MenuIcon" src="../icons/constelatie.png" onclick="accessPage('constelatii.html')"/>
+		</div>
+		
+		<div id="Footer">
+			<a href="https://planetariubm.ro/2011/03/26/povestile-cerului-constelatiile-de-la-a-la-v-adica-z-prezentate-de-planetariul-baia-mare/" target="_blank">Planetariubm.ro</a><p>:</span><p> Sursa </p>
+		</div>
+		
+		<script src="res/script.js"></script>
+	
+	</body>
+</html>
